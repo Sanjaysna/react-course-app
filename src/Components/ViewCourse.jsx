@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Navbar from './Navbar'
 
 const ViewCourse = () => {
 
@@ -23,6 +24,7 @@ const ViewCourse = () => {
 
     return (
         <div>
+            <Navbar />
 
             <div className="container">
 
