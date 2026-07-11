@@ -1,80 +1,82 @@
-import React, { useState } from 'react'
-import Navbar from './Navbar'
-
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const ViewCourse = () => {
 
-    const [data, changeData] = useState(
-        [
-            {
-                id: 1,
-                course_name: "MERN Stack Bootcamp",
-                duration: "8 Days",
-                fee: 15000,
-                mode: "Offline",
-                trainer: "Anish",
-                created_at: "2026-07-11T13:59:49"
-            },
-            {
-                id: 2,
-                course_name: "JAVA Full Stack Bootcamp",
-                duration: "7 Days",
-                fee: 15000,
-                mode: "Online",
-                trainer: "Manoj",
-                created_at: "2026-07-12T10:30:15"
-            }
-        ]
-    )
+    const [data, changeData] = useState([])
+
+    const fetchData = () => {
+
+        axios.get("https://host-demo-app.onrender.com/api/courses")
+            .then((response) => {
+                changeData(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     return (
         <div>
-            <Navbar/>
+
             <div className="container">
-                <div className="row">
-                    <div className="col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
 
-                        <h2 className="text-center my-4">View Courses</h2>
+                <h1 className="text-center mt-4">
+                    View All Courses
+                </h1>
 
-                        <div className="table-responsive">
-                            <table className="table table-bordered table-striped table-hover">
+                <div className="row mt-4">
 
-                                <thead className="table-dark">
-                                    <tr>
-                                        <th>Course Name</th>
-                                        <th>Duration</th>
-                                        <th>Fee</th>
-                                        <th>Mode</th>
-                                        <th>Trainer</th>
-                                        <th>Created At</th>
-                                    </tr>
-                                </thead>
+                    {
+                        data.map((value, index) => {
 
-                                <tbody>
-                                    {
-                                        data.map(
-                                            (value, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{value.course_name}</td>
-                                                        <td>{value.duration}</td>
-                                                        <td>₹{value.fee}</td>
-                                                        <td>{value.mode}</td>
-                                                        <td>{value.trainer}</td>
-                                                        <td>{value.created_at}</td>
-                                                    </tr>
-                                                )
-                                            }
-                                        )
-                                    }
-                                </tbody>
+                            return (
 
-                            </table>
-                        </div>
+                                <div
+                                    className="col col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+                                    key={index}
+                                >
 
-                    </div>
+                                    <div className="card shadow h-100">
+
+                                        <div className="card-body">
+
+                                            <h5 className="card-title">
+                                                {value.course_name}
+                                            </h5>
+
+                                            <p className="card-text">
+                                                <strong>Duration:</strong> {value.duration}
+                                                <br />
+                                                <strong>Fee:</strong> ₹{value.fee}
+                                                <br />
+                                                <strong>Mode:</strong> {value.mode}
+                                                <br />
+                                                <strong>Trainer:</strong> {value.trainer}
+                                                <br />
+                                                <strong>Created At:</strong> {value.created_at}
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            )
+
+                        })
+                    }
+
                 </div>
+
             </div>
+
         </div>
     )
 }
