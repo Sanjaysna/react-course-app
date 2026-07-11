@@ -3,14 +3,14 @@ import './App.css'
 
 import AddCourse from './Components/AddCourse'
 import ViewCourse from './Components/ViewCourse'
-import Navigation from './Components/Navigation'
+import Navbar from './Components/Navbar'
 
 function App() {
   return (
     <>
       <BrowserRouter>
 
-        <Navigation />
+        
 
         <Routes>
           <Route path="/" element={<AddCourse />} />
